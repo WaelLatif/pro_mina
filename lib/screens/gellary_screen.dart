@@ -143,7 +143,10 @@ class GalleryScreen extends StatelessWidget {
                                   crossAxisCount: 3,
                                   children: List.generate(
                                     images!.length,
-                                        (index) => buildGridImages(context,size,images[index]),
+                                        (index) => Padding(
+                                          padding: const EdgeInsets.only(left: 8.0, right: 8,top: 8.0 ),
+                                          child: buildGridImages(context,size,images[index]),
+                                        ),
                                     ),
                                   ),
                                 ),
@@ -170,13 +173,18 @@ class GalleryScreen extends StatelessWidget {
           onTap: () {},
           child: ClipRRect(
             borderRadius: BorderRadius.circular(12.0),
-            child: Image.network(
-              image.toLowerCase().endsWith('.jpg') ||
-                  image.toLowerCase().endsWith('.jpeg')  ||
-                  image.toLowerCase().endsWith('.png')   ||
-                  image.toLowerCase().endsWith('.webp')
-                  ? image :'https://demofree.sirv.com/nope-not-here.jpg' ,
-              fit: BoxFit.fill,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(30.0),),
+              ),
+              child: Image.network(
+                image.toLowerCase().endsWith('.jpg') ||
+                    image.toLowerCase().endsWith('.jpeg')  ||
+                    image.toLowerCase().endsWith('.png')   ||
+                    image.toLowerCase().endsWith('.webp')
+                    ? image :'https://demofree.sirv.com/nope-not-here.jpg' ,
+                fit: BoxFit.fill,
+              ),
             ),
           ),
         ),
