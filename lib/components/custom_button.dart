@@ -15,11 +15,13 @@ class CustomButton extends StatelessWidget {
     this.width=double.infinity,
     this.height=60.0,
     this.image,
+    this.background= Colors.white,
+
   });
 
   double width;
   double height;
-  Color background = Colors.blue;
+  Color background ;
   bool? isUpperCase = true;
   double radius = 3.0;
   Function? function;
@@ -42,12 +44,14 @@ class CustomButton extends StatelessWidget {
           color: Colors.white,
         ),
         child: Row(
+
           children: [
+          SizedBox(width: 10.0,),
             SizedBox(
-              height: 30.0,
+              height: 20.0,
               child: Image.asset(
                 image!,
-                fit: BoxFit.fitHeight,
+                fit: BoxFit.fill,
               ),
             ),
             MaterialButton(

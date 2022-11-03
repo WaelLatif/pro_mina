@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'constant.dart';
 
 class CustomFormTextField extends StatelessWidget {
   CustomFormTextField({
@@ -11,6 +10,7 @@ class CustomFormTextField extends StatelessWidget {
     this.obsecureTxt = false,
     this.size,
     this.width,
+    this.controller,
   });
 
   String? hintText;
@@ -19,6 +19,7 @@ class CustomFormTextField extends StatelessWidget {
   bool? obsecureTxt;
   Size? size;
   double? width;
+  TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -35,14 +36,10 @@ class CustomFormTextField extends StatelessWidget {
           color: Colors.white.withOpacity(.5),
           borderRadius: BorderRadius.circular(25),
         ),
-        child: TextFormField(
+        child: TextField(
           obscureText: obsecureTxt!,
-          validator: (data) {
-            if (data!.isEmpty) {
-              return 'field is required !';
-            }
-          },
           onChanged: onChanged,
+          onSubmitted: onChanged,
           decoration: InputDecoration(
             hintText: hintText,
             focusedBorder: OutlineInputBorder(
