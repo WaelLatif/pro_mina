@@ -31,7 +31,7 @@ class CustomFormTextField extends StatelessWidget {
         ),
         height: size!.width / 8.5,
         width: width,
-        alignment: Alignment.center,
+        alignment: Alignment.centerLeft,
         decoration: BoxDecoration(
           color: Colors.white.withOpacity(.5),
           borderRadius: BorderRadius.circular(25),

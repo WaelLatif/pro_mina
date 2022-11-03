@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:pro_mina/screens/gellary_screen.dart';
+import 'package:pro_mina/network/remote/dio_helper.dart';
+
 import 'package:pro_mina/screens/login_screen.dart';
 
 void main() {
   runApp(const MyApp());
+  DioHelper.init();
 }
 
 class MyApp extends StatelessWidget {
