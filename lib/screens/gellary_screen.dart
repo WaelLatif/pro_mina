@@ -2,158 +2,186 @@
 
 import 'dart:io';
 import 'dart:ui';
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import '../components/constant.dart';
-import '../components/custom_Form_text_field.dart';
+import 'package:pro_mina/components/constant.dart';
 import '../components/custom_button.dart';
+import '../cubits/gallery_cubit/gallery_cubit.dart';
+import '../cubits/gallery_cubit/gallery_states.dart';
+import '../network/local/cache_helper.dart';
 import 'login_screen.dart';
 
 class GalleryScreen extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
+
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: ListView(
-        physics: NeverScrollableScrollPhysics(),
-        children: [
-          SizedBox(
-            height: size.height,
-            child: Stack(
-              children: [
-                SizedBox(
-                  height: size.height,
-                  child: Image.asset(
-                    'assets/images/gallery.jpg',
-                    fit: BoxFit.fitHeight,
+    String fullName = CacheHelper.getData(key: userName);
+    var names = fullName.split(' ');
+    String firstName = names[0];
+
+     return BlocConsumer<GalleryCubit, GalleryStates>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          return  Scaffold(
+        body: ListView(
+          physics: NeverScrollableScrollPhysics(),
+          children: [
+            SizedBox(
+              height: size.height,
+              child: Stack(
+                children: [
+                  SizedBox(
+                    height: size.height,
+                    child: Image.asset(
+                      'assets/images/gallery.jpg',
+                      fit: BoxFit.fitHeight,
+                    ),
                   ),
-                ),
-                Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 16.0, right: 16.0, top: 10.0),
-                      child: Row(
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Welcome',
-                                style: TextStyle(
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.black.withOpacity(.7),
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 16.0, right: 16.0, top: 10.0),
+                        child: Row(
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Welcome',
+                                  style: TextStyle(
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black.withOpacity(.7),
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                height: 5.0,
-                              ),
-                              Text(
-                                'Mina',
-                                style: TextStyle(
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.black.withOpacity(.7),
+                                SizedBox(
+                                  height: 5.0,
                                 ),
-                              ),
-                            ],
-                          ),
-                          Spacer(),
-                          Container(
-                            alignment: Alignment.topRight,
-                            child: CircleAvatar(
-                              backgroundColor: Colors.white,
-                              radius: 30.0,
-                              child: Image.asset(
-                                'assets/images/login.jpg',
-                                fit: BoxFit.cover,
+                                Text(
+                                  firstName,
+                                  style: TextStyle(
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black.withOpacity(.7),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Spacer(),
+                            Container(
+                              alignment: Alignment.topRight,
+                              child: CircleAvatar(
+                                backgroundColor: Colors.white,
+                                radius: 30.0,
+                                child: Image.asset(
+                                  'assets/images/faceImage.jpg',
+                                  fit: BoxFit.fill,
+                                ),
                               ),
                             ),
+                            SizedBox(
+                              width: 10.0,
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 30.0,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CustomButton(
+                            function: () {
+                              Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                                      (route) => false);
+                            },
+                            text: 'log out',
+                            width: size.width / 2.9,
+                            height: size.height / 22.0,
+                            fontSize: 20.0,
+                            image: 'assets/images/arrowOut.jpg',
                           ),
-                          SizedBox(
-                            width: 10.0,
+                          CustomButton(
+                            function: () {
+                              PickImage(context, size);
+                            },
+                            text: 'upload',
+                            width: size.width / 2.9,
+                            height: size.height / 22.0,
+                            fontSize: 20.0,
+                            image: 'assets/images/arrowUp.jpg',
                           ),
                         ],
                       ),
-                    ),
-                    SizedBox(
-                      height: 30.0,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CustomButton(
-                          function: () {
-                            Navigator.of(context).pushAndRemoveUntil(
-                                MaterialPageRoute(builder: (context) => LoginScreen()),
-                                    (route) => false);
-                          },
-                          text: 'log out',
-                          width: size.width / 2.9,
-                          height: size.height / 22.0,
-                          fontSize: 20.0,
-                          image: 'assets/images/arrowOut.jpg',
-                        ),
-                        CustomButton(
-                          function: () {
-                            PickImage(context, size);
-                          },
-                          text: 'upload',
-                          width: size.width / 2.9,
-                          height: size.height / 22.0,
-                          fontSize: 20.0,
-                          image: 'assets/images/arrowUp.jpg',
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 30.0,
-                    ),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        physics: BouncingScrollPhysics(),
-                        child: GridView.count(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          mainAxisSpacing: 15.0,
-                          crossAxisSpacing: 5.0,
-                          crossAxisCount: 3,
-                          children: List.generate(
-                            50,
-                            (index) => Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 8.0, right: 8.0, bottom: 8.0),
-                              child: buildGridProduct(context, size),
-                            ),
-                          ),
-                        ),
+                      SizedBox(
+                        height: 30.0,
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                      ConditionalBuilder(
+                        condition: GalleryCubit.get(context).gallery != null,
+                        fallback: (context)=> Center(
+                            child: CircularProgressIndicator(
+                            ),),
+                        builder: (context) {
+                          List <String>? images = GalleryCubit.get(context).gallery!.data!.images;
+                          return
+                            Expanded(
+
+                              child: SingleChildScrollView(
+                                physics: BouncingScrollPhysics(),
+                                child: GridView.count(
+                                  physics: NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  mainAxisSpacing: 15.0,
+                                  crossAxisSpacing: 5.0,
+                                  crossAxisCount: 3,
+                                  children: List.generate(
+                                    images!.length,
+                                        (index) => buildGridImages(context,size,images[index]),
+                                    ),
+                                  ),
+                                ),
+                              );
+
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
-    );
+          ],
+        ),
+      );
+        },
+     );
   }
 
-  Widget buildGridProduct(context, size) => SizedBox(
+  Widget buildGridImages(context, Size size, String image) => SizedBox(
         width: size.width / 2.4,
         height: size.height / 3.9,
         child: InkWell(
           onTap: () {},
           child: ClipRRect(
             borderRadius: BorderRadius.circular(12.0),
-            child: Image.asset(
-              'assets/images/login.jpg',
+            child: Image.network(
+              image.toLowerCase().endsWith('.jpg') ||
+                  image.toLowerCase().endsWith('.jpeg')  ||
+                  image.toLowerCase().endsWith('.png')   ||
+                  image.toLowerCase().endsWith('.webp')
+                  ? image :'https://demofree.sirv.com/nope-not-here.jpg' ,
               fit: BoxFit.fill,
             ),
           ),
         ),
       );
+
 
   void PickImage(context, size) {
     showDialog(

@@ -5,12 +5,13 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:glassmorphism/glassmorphism.dart';
-import 'package:pro_mina/login_cubit/login_cubit.dart';
-import 'package:pro_mina/login_cubit/login_states.dart';
+
 import 'package:pro_mina/screens/gellary_screen.dart';
 
 import '../components/components.dart';
 import '../components/custom_Form_text_field.dart';
+import '../cubits/login_cubit/login_cubit.dart';
+import '../cubits/login_cubit/login_states.dart';
 
 class LoginScreen extends StatelessWidget {
   String? email, password;
@@ -142,7 +143,7 @@ class LoginScreen extends StatelessWidget {
                                     condition: state is! LoginLoadingState,
                                     builder: (context) => MaterialButton(
                                       onPressed: () async {
-                                        LoginCubit.get(context).userLogin(
+                                        LoginCubit.get(context).  userLogin(
                                             email: email!,
                                             password:
                                             password!);
