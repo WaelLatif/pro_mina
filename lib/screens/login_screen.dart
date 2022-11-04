@@ -10,6 +10,7 @@ import 'package:pro_mina/screens/gellary_screen.dart';
 
 import '../components/components.dart';
 import '../components/custom_Form_text_field.dart';
+import '../components/variables.dart';
 import '../cubits/login_cubit/login_cubit.dart';
 import '../cubits/login_cubit/login_states.dart';
 
@@ -24,12 +25,23 @@ class LoginScreen extends StatelessWidget {
       create: (BuildContext context) => LoginCubit(),
       child: BlocConsumer<LoginCubit, LoginStates>(
         listener: (context, state) {
-          if (state is LoginSuccessState) {
+      if (state is LoginErrorState) {
+        ShowToast(
+          context,
+          message: 'Invalid Email or Password',
+          state: AppState.error,
+          duration: DurationState.error,
+        );
+      }
+      if (state is LoginSuccessState) {
+        navigateAndReplace(context, GalleryScreen());
+        ShowToast(
+            context,
+            message: 'Login Success',
+            state: AppState.success,
+            duration: DurationState.success,);
 
-            navigateAndReplace(context, GalleryScreen());
-
-          }
-        },
+      } },
         builder: (context, state) {
           final TextEditingController emailController = TextEditingController();
           final TextEditingController  passwordController = TextEditingController();
@@ -37,7 +49,6 @@ class LoginScreen extends StatelessWidget {
             body: Form(
               key:formKey,
               child: SingleChildScrollView(
-                physics: NeverScrollableScrollPhysics(),
                 child: Container(
                   height: size.height,
                   decoration: BoxDecoration(

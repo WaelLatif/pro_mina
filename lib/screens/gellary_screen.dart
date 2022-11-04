@@ -9,7 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pro_mina/components/constant.dart';
+import '../components/components.dart';
 import '../components/custom_button.dart';
+import '../components/variables.dart';
 import '../cubits/gallery_cubit/gallery_cubit.dart';
 import '../cubits/gallery_cubit/gallery_states.dart';
 import '../network/local/cache_helper.dart';
@@ -28,7 +30,24 @@ class GalleryScreen extends StatelessWidget {
     String firstName = names[0];
 
     return BlocConsumer<GalleryCubit, GalleryStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is addImagesErrorState) {
+          ShowToast(
+            context,
+            message: 'Some Thing went Wrong ' ,
+            state: AppState.error,
+            duration: DurationState.error,
+          );
+        }
+        if (state is addImagesSuccessState) {
+          ShowToast(
+            context,
+            message: 'Image Add Successfully',
+            state: AppState.success,
+            duration: DurationState.success,);
+
+        }
+      },
       builder: (context, state) {
         return Scaffold(
           body: ListView(
