@@ -13,3 +13,15 @@ class getImagesInitialState extends GalleryStates {}
  String error;
  getImagesErrorState(this.error);
  }
+
+
+class addImagesInitialState extends GalleryStates {}
+
+class addImagesLoadingState extends GalleryStates {}
+
+class addImagesSuccessState extends GalleryStates {}
+
+class addImagesErrorState extends GalleryStates {
+ String error;
+ addImagesErrorState(this.error);
+}
