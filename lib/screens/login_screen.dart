@@ -57,11 +57,11 @@ class LoginScreen extends StatelessWidget {
                   ),
                   child: Column(
                     children: [
-                      SizedBox(height: size.height/2.7,),
+                      SizedBox(height: size.height/2.5,),
                       Center(
                         child: GlassmorphicContainer(
                           width: size.width * 0.9,
-                          height: size.height * 0.5,
+                          height: size.height * 0.6,
                           borderRadius: 30,
                           blur: 20,
                           alignment: Alignment.bottomCenter,

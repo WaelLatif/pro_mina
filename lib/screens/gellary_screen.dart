@@ -50,152 +50,145 @@ class GalleryScreen extends StatelessWidget {
       },
       builder: (context, state) {
         return Scaffold(
-          body: ListView(
+          body: SingleChildScrollView(
             physics: NeverScrollableScrollPhysics(),
-            children: [
-              SizedBox(
-                height: size.height,
-                child: Stack(
-                  children: [
-                    SizedBox(
-                      height: size.height,
-                      child: Image.asset(
-                        'assets/images/gallery.jpg',
-                        fit: BoxFit.fitHeight,
-                      ),
-                    ),
-                    Column(
+            child:Container(
+              height: size.height,
+              decoration: BoxDecoration(
+                  image: DecorationImage(fit:BoxFit.fill,
+                      image: AssetImage('assets/images/gallery.jpg',),),),
+              child: Column(
+                children: [
+                  SizedBox(height: size.height*.025,),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 16.0, right: 16.0, top: 8.5,),
+                    child: Row(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 16.0, right: 16.0, top: 10.0),
-                          child: Row(
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Welcome',
-                                    style: TextStyle(
-                                      fontSize: 28,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.black.withOpacity(.7),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 5.0,
-                                  ),
-                                  Text(
-                                    firstName,
-                                    style: TextStyle(
-                                      fontSize: 28,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.black.withOpacity(.7),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Spacer(),
-                              Container(
-                                alignment: Alignment.topRight,
-                                child: CircleAvatar(
-                                  backgroundColor: Colors.white,
-                                  radius: 30.0,
-                                  child: Image.asset(
-                                    'assets/images/faceImage.jpg',
-                                    fit: BoxFit.fill,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10.0,
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 30.0,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            CustomButton(
-                              function: () {
-                                Navigator.of(context).pushAndRemoveUntil(
-                                    MaterialPageRoute(
-                                        builder: (context) => LoginScreen()),
-                                        (route) => false);
-                                CacheHelper.removeData(key: userName);
-                              },
-                              text: 'log out',
-                              width: size.width / 2.9,
-                              height: size.height / 22.0,
-                              fontSize: 20.0,
-                              image: 'assets/images/arrowOut.jpg',
+                            Text(
+                              'Welcome',
+                              style: TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.black.withOpacity(.7),
+                              ),
                             ),
-                            CustomButton(
-                              function: () {
-                                PickImage(context, size);
-                              },
-                              text: 'upload',
-                              width: size.width / 2.9,
-                              height: size.height / 22.0,
-                              fontSize: 20.0,
-                              image: 'assets/images/arrowUp.jpg',
+                            SizedBox(
+                              height: 5.0,
+                            ),
+                            Text(
+                              firstName,
+                              style: TextStyle(
+                                fontSize: 28,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.black.withOpacity(.7),
+                              ),
                             ),
                           ],
                         ),
-                        SizedBox(
-                          height: 30.0,
+                        Spacer(),
+                        Container(
+                          alignment: Alignment.topRight,
+                          child: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            radius: size.width*0.07,
+                            child: Image.asset(
+                              'assets/images/faceImage.jpg',
+                              fit: BoxFit.fill,
+                            ),
+                          ),
                         ),
-                        ConditionalBuilder(
-                          condition: GalleryCubit
-                              .get(context)
-                              .gallery != null,
-                          fallback: (context) =>
-                              Center(
-                                child: CircularProgressIndicator(),
-                              ),
-                          builder: (context) {
-                            List<String>? images =
-                                GalleryCubit
-                                    .get(context)
-                                    .gallery!
-                                    .data!
-                                    .images;
-                            return Expanded(
-                              child: SingleChildScrollView(
-                                physics: BouncingScrollPhysics(),
-                                child: GridView.count(
-                                  physics: NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  mainAxisSpacing: 15.0,
-                                  crossAxisSpacing: 5.0,
-                                  crossAxisCount: 3,
-                                  children: List.generate(
-                                    images!.length,
-                                        (index) =>
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 8.0, right: 8, top: 8.0),
-                                          child: buildGridImages(
-                                              context, size, images[index]),
-                                        ),
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
+                        SizedBox(
+                          width: 10.0,
                         ),
                       ],
                     ),
-                  ],
-                ),
+                  ),
+                  SizedBox(
+                    height: 30.0,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CustomButton(
+                        function: () {
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (context) => LoginScreen()),
+                                  (route) => false);
+                          CacheHelper.removeData(key: userName);
+                        },
+                        text: 'log out',
+                        width: size.width / 2.9,
+                        height: size.height / 22.0,
+                        fontSize: 20.0,
+                        image: 'assets/images/arrowOut.jpg',
+                      ),
+                      CustomButton(
+                        function: () {
+                          PickImage(context, size);
+                        },
+                        text: 'upload',
+                        width: size.width / 2.9,
+                        height: size.height / 22.0,
+                        fontSize: 20.0,
+                        image: 'assets/images/arrowUp.jpg',
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 30.0,
+                  ),
+                  ConditionalBuilder(
+                    condition: GalleryCubit
+                        .get(context)
+                        .gallery != null,
+                    fallback: (context) =>
+                        Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                    builder: (context) {
+                      List<String>? images =
+                          GalleryCubit
+                              .get(context)
+                              .gallery!
+                              .data!
+                              .images;
+                      return Expanded(
+                        child: SingleChildScrollView(
+                          physics: BouncingScrollPhysics(),
+                          child: GridView.count(
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            mainAxisSpacing: 15.0,
+                            crossAxisSpacing: 5.0,
+                            crossAxisCount: 3,
+                            children: List.generate(
+                              images!.length,
+                                  (index) =>
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 8.0, right: 8, top: 8.0),
+                                    child: buildGridImages(
+                                        context, size, images[index]),
+                                  ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
-            ],
-          ),
-        );
-      },
+            ),
+
+
+
+        ),
+        );},
     );
   }
 
